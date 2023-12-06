@@ -478,3 +478,6 @@ $RECYCLE.BIN/
 
 ApiColegioPagos/appsettings.json
 ApiColegioPagos/appsettings.Developmentgt.json
+
+# ignorar appsettings
+/appsettings.json
