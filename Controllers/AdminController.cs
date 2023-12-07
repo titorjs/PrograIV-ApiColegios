@@ -41,7 +41,7 @@ namespace ApiColegioPagos.Controllers
             }
         }
 
-        [HttpPut]
+        /*[HttpPut]
         public async Task<IActionResult> CambioContrasenia(Admin adminCambio, String nuevaContrasenia)
         {
             try
@@ -72,6 +72,6 @@ namespace ApiColegioPagos.Controllers
             {
                 return BadRequest(ex.Message);
             }
-        }
+        }*/
     }
 }

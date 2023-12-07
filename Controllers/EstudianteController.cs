@@ -114,13 +114,13 @@ namespace ApiColegioPagos.Controllers
                     Est_direccion = est.Est_direccion,
                     Est_nombre = est.Est_nombre,
                     Pension = 2,
-                    contrasenia = est.Est_contrasenia
-            };
+                    contrasenia = "Estudiantes2023"
+                };
 
-                //if (est.Est_contrasenia != null)
-                //{
-                //    estudiante.contrasenia = est.Est_contrasenia;
-                //}
+                if (est.Est_contrasenia != null)
+                {
+                    estudiante.contrasenia = est.Est_contrasenia;
+                }
 
                 await _context.Estudiantes.AddAsync(estudiante);
                 await _context.SaveChangesAsync();
@@ -313,7 +313,7 @@ namespace ApiColegioPagos.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(Estudiante estudianteValidar)
+        public async Task<IActionResult> Login([FromBody] Estudiante estudianteValidar)
         {
             try
             {
@@ -337,8 +337,8 @@ namespace ApiColegioPagos.Controllers
             }
         }
 
-        [HttpPut("cambioContrasenia")]
-        public async Task<IActionResult> CambioContrasenia(Estudiante estudianteCambio, String nuevaContrasenia)
+        [HttpPut("cambioContrasenia/{nuevaContrasenia}")]
+        public async Task<IActionResult> CambioContrasenia([FromBody] Estudiante estudianteCambio, String nuevaContrasenia)
         {
             try
             {
@@ -363,6 +363,30 @@ namespace ApiColegioPagos.Controllers
                 }
 
                 return BadRequest("La contraseña actual no coincide");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("resetearContrasenia/{id}")]
+        public async Task<IActionResult> resetearContrasenia(int id)
+        {
+            try
+            {
+                Estudiante estudiante = await _context.Estudiantes.FirstOrDefaultAsync(x => x.Est_id == id);
+
+                if (estudiante == null)
+                {
+                    return BadRequest("No existe tal estudiante");
+                }
+
+                estudiante.contrasenia = "Estudiantes2023";
+                _context.Estudiantes.Update(estudiante);
+                _context.SaveChanges();
+
+                return Ok();
             }
             catch (Exception ex)
             {
